@@ -11,6 +11,7 @@ namespace MyTestAutomationSeleniumCSharp.Pages
         private IWebDriver _driver;
         private string _url = "https://eaapp.somee.com/";
 
+
         public LandingPage(IWebDriver driver)
         {
             this._driver = driver;

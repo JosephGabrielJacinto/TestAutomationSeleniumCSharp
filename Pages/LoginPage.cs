@@ -11,7 +11,7 @@ namespace MyTestAutomationSeleniumCSharp.Pages
     {
         private IWebDriver _driver;
 
-        private string _url = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
+        private string _url = "https://eaapp.somee.com/Account/Login";
 
         public LoginPage(IWebDriver driver)
         {
@@ -20,12 +20,19 @@ namespace MyTestAutomationSeleniumCSharp.Pages
 
 
         //**Page Elements for Login Page**//
-        IWebElement usernameTxt => this._driver.FindElement(By.Name("username"));
-        IWebElement passwordTxt => this._driver.FindElement(By.Name("password"));
-        IWebElement loginBtn => this._driver.FindElement(By.ClassName("orangehrm-login-button"));
-        IWebElement forgotPassLink => this._driver.FindElement(By.ClassName("orangehrm-login-forgot-header"));
+        IWebElement usernameTxt => this._driver.FindElement(By.Id("UserName"));
+        
+        IWebElement passwordTxt => this._driver.FindElement(By.Id("Password"));
+        
+        IWebElement loginBtn => this._driver.FindElement(By.ClassName("btn-signin"));
+        
+        IWebElement forgotPassLink => this._driver.FindElement(By.LinkText("Forgot password?"));
+
+        IWebElement rememberMeCheckbox => this._driver.FindElement(By.Id("RememberMe"));
 
 
+        
+        
         //**Page Actions / Methods for Login Page**//
         
         //Method to navigate to login page
@@ -54,7 +61,7 @@ namespace MyTestAutomationSeleniumCSharp.Pages
         {
             loginBtn.Click();
         }
-
+        
 
         //Action to a complete login process
         public void Login(string username, string password)
