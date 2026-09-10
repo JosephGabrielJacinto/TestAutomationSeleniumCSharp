@@ -71,5 +71,20 @@ namespace MyTestAutomationSeleniumCSharp.Pages
             Helper.ClickElement(loginBtn);
         }
 
+        public bool CheckLoginPageAccessible()
+        {
+            try
+            {
+                if(usernameTxt.Displayed && passwordTxt.Displayed)
+                    return true;
+
+                return false;
+            }
+            catch (NoSuchElementException e)
+            {
+                return false;
+            }   
+        }
+
     }
 }

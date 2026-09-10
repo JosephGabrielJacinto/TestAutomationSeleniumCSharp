@@ -21,7 +21,7 @@ namespace MyTestAutomationSeleniumCSharp.Pages
         //**Page Elements for Landing Page**//
         IWebElement viewEmployeesBtn => _driver.FindElement(By.PartialLinkText("View Employees"));
 
-        IWebElement signInBtn => _driver.FindElement(By.LinkText(" Sign In "));
+        IWebElement signInBtn => _driver.FindElement(By.LinkText("Sign In"));
 
 
 
