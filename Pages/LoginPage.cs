@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using MyTestAutomationSeleniumCSharp.Custom;
+using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V151.Emulation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +10,7 @@ namespace MyTestAutomationSeleniumCSharp.Pages
     public class LoginPage
     {
         private IWebDriver _driver;
+
         private string _url = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
 
         public LoginPage(IWebDriver driver)
@@ -28,22 +31,23 @@ namespace MyTestAutomationSeleniumCSharp.Pages
         //Method to navigate to login page
         public void NavigateToLoginPage()
         {
-            this._driver.Navigate().GoToUrl(_url);
+            Helper.GoTo(this._driver, _url);
         }
+
 
         //Action to enter value on username text field
         public void EnterUsername(string username)
         {
-            usernameTxt.Clear();
-            usernameTxt.SendKeys(username);
+            Helper.EnterText(usernameTxt,username);
         }
+
 
         //Action to enter value on password text field
         public void EnterPassword(string password)
         {
-            passwordTxt.Clear(); 
-            passwordTxt.SendKeys(password);
+            Helper.EnterText(passwordTxt, password);
         }
+
 
         //Action to click login button
         public void ClickLoginBtn()
@@ -51,10 +55,13 @@ namespace MyTestAutomationSeleniumCSharp.Pages
             loginBtn.Click();
         }
 
-        //Action to complete login process
-        public void Login()
-        {
 
+        //Action to a complete login process
+        public void Login(string username, string password)
+        {
+            Helper.EnterText(usernameTxt, username);
+            Helper.EnterText(passwordTxt, password);
+            Helper.ClickElement(loginBtn);
         }
 
     }
