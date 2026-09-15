@@ -16,23 +16,180 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         #pragma warning disable NUnit1032
         private IWebDriver _driver;
 
+        
+
         [SetUp]
         public void SetUp()
         {
             _driver = new ChromeDriver();    
         }
 
-        [Test]
-        public void TC01_VerifyUserCanAcessLoginPage()
+
+        [Test(Author = "Joseph Jacinto")]
+        [Description("Verifies that a user can access the Login Page by clicking the Sign In button")]
+        public void TC01_VerifyUserCanAcessLoginPageBySignInBtn()
         {
-            LandingPage landingPage = new LandingPage(_driver);
-            LoginPage loginPage = new LoginPage(_driver);
+            try
+            {
+                LandingPage landingPage = new LandingPage(_driver);
+                LoginPage loginPage = new LoginPage(_driver);
 
-            landingPage.NavigateToLandingPage();
-            landingPage.ClickSignInBtn();
+                landingPage.NavigateToLandingPage();
+                landingPage.ClickSignInBtn();
 
-            Assert.That(loginPage.CheckLoginPageAccessible(), "Test Failed - Accessing Login Page Not Successful");
+                Assert.That(loginPage.CheckLoginPageAccessible(), LoginPage._errMsgPageNotAccessible);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail($"Test Failed - {e.Message}");
+            }           
         }
+
+
+        [Test(Author = "Joseph Jacinto")]
+        [Description("Verifies that a user can access the Login Page by clicking the Login from the header")]
+        public void TC02_VerifyUserCanAcessLoginPageByLoginBtn()
+        {
+            try
+            {
+                LandingPage landingPage = new LandingPage(_driver);
+                Commons commons = new Commons(_driver);
+                LoginPage loginPage = new LoginPage(_driver);
+
+                landingPage.NavigateToLandingPage();
+                commons.ClickLoginLink();
+
+                Assert.That(loginPage.CheckLoginPageAccessible(), LoginPage._errMsgPageNotAccessible);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail($"Test Failed - {e.Message}");
+            }            
+        }
+
+
+
+        [Test(Author = "Joseph Jacinto")]
+        [Description("Verifies that a user can successfully Log in using valid username and valid password")]
+        public void TC03_VerifyLoginByValidUsernameAndValidPassword()
+        {
+            try
+            {
+                Commons commons = new Commons(_driver);
+                LandingPage landingPage = new LandingPage(_driver);
+                LoginPage loginPage = new LoginPage(_driver);
+
+                landingPage.NavigateToLandingPage();
+
+                commons.ClickLoginLink();
+
+                if (loginPage.CheckLoginPageAccessible())
+                {
+                    loginPage.Login(DataRead.GetUserAccount().ValidUsername, DataRead.GetUserAccount().ValidPassword);
+                    Assert.That(loginPage.CheckUserIsLoggedIn(), LoginPage._errMsgLoginNotSuccesful);
+                }
+                else
+                {
+                    Assert.Fail(LoginPage._errMsgPageNotAccessible);
+                }
+            }
+            catch(Exception e){
+                Assert.Fail($"Test Failed - {e.Message}");
+            }
+        }
+
+
+
+        [Test (Author = "Joseph Jacinto")]
+        [Description("Verifies that a user will not be able to Log in using valid username and invalid password")]
+        public void TC04_VerifyLoginByValidUsernameAndInvalidPassword()
+        {
+            try
+            {
+                Commons commons = new Commons(_driver);
+                LoginPage loginPage = new LoginPage(_driver);
+
+                loginPage.NavigateToLoginPage();
+
+                if (loginPage.CheckLoginPageAccessible())
+                {
+                    loginPage.Login(DataRead.GetUserAccount().ValidUsername, DataRead.GetUserAccount().InvalidPassword);
+                    Assert.That(loginPage.CheckErrorMsgIfVisible(), LoginPage._errMsgNotDisplayed);
+                    Assert.That(!loginPage.CheckUserIsLoggedIn(), LoginPage._errMsgLoginSuccessfulInvalidPassword);
+                }
+                else
+                {
+                    Assert.Fail(LoginPage._errMsgPageNotAccessible);
+                }
+
+            }
+            catch(Exception e)
+            {
+                Assert.Fail($"Test Failed - {e.Message}");
+            }
+        }
+
+
+
+        [Test (Author = "Joseph Jacinto")]
+        [Description("Verifies that a user will not be able to Log in using invalid username and valid password")]
+        public void TC05_VerifyLoginByInvalidUsernameAndValidPassword()
+        {
+            try
+            {
+                Commons commons = new Commons(_driver);
+                LoginPage loginPage = new LoginPage(_driver);
+
+                loginPage.NavigateToLoginPage();
+
+                if (loginPage.CheckLoginPageAccessible())
+                {
+                    loginPage.Login(DataRead.GetUserAccount().InvalidUsername, DataRead.GetUserAccount().ValidPassword);
+                    Assert.That(loginPage.CheckErrorMsgIfVisible());
+                    Assert.That(!loginPage.CheckUserIsLoggedIn(), LoginPage._errMsgLoginSuccessfulInvalidUsername);
+                }
+                else
+                {
+                    Assert.Fail(LoginPage._errMsgPageNotAccessible);
+                }
+
+            }catch(Exception e)
+            {
+                Assert.Fail($"Test Failed - {e.Message}");
+            }
+        }
+
+
+
+        [Test (Author = "Joseph Jacinto")]
+        [Description("Verifies that a user will not be able to Log in using invalid username and invalid password")]
+        public void TC06_VerifyLoginByInvalidUsernameAndInvalidPassword()
+        {
+            try
+            {
+                Commons commmonss = new Commons(_driver);
+                LoginPage loginPage = new LoginPage(_driver);
+
+                loginPage.NavigateToLoginPage();
+
+                if (loginPage.CheckLoginPageAccessible())
+                {
+                    loginPage.Login(DataRead.GetUserAccount().InvalidUsername, DataRead.GetUserAccount().InvalidPassword);
+                    Assert.That(loginPage.CheckErrorMsgIfVisible());
+                    Assert.That(!loginPage.CheckUserIsLoggedIn(), LoginPage._errMsgLoginSuccessfulInvalidCredentials);
+                }
+                else
+                {
+                    Assert.Fail(LoginPage._errMsgPageNotAccessible);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Assert.Fail($"Test Failed - {e.Message}");
+            }
+        }
+
 
 
         [TearDown]
