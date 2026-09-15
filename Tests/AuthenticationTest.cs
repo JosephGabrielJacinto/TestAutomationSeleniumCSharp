@@ -21,7 +21,7 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         [SetUp]
         public void SetUp()
         {
-            _driver = new ChromeDriver();    
+            this._driver = new ChromeDriver();    
         }
 
 
@@ -31,8 +31,8 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         {
             try
             {
-                LandingPage landingPage = new LandingPage(_driver);
-                LoginPage loginPage = new LoginPage(_driver);
+                LandingPage landingPage = new LandingPage(this._driver);
+                LoginPage loginPage = new LoginPage(this._driver);
 
                 landingPage.NavigateToLandingPage();
                 landingPage.ClickSignInBtn();
@@ -52,9 +52,9 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         {
             try
             {
-                LandingPage landingPage = new LandingPage(_driver);
-                Commons commons = new Commons(_driver);
-                LoginPage loginPage = new LoginPage(_driver);
+                LandingPage landingPage = new LandingPage(this._driver);
+                Commons commons = new Commons(this._driver);
+                LoginPage loginPage = new LoginPage(this._driver);
 
                 landingPage.NavigateToLandingPage();
                 commons.ClickLoginLink();
@@ -75,9 +75,9 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         {
             try
             {
-                Commons commons = new Commons(_driver);
-                LandingPage landingPage = new LandingPage(_driver);
-                LoginPage loginPage = new LoginPage(_driver);
+                Commons commons = new Commons(this._driver);
+                LandingPage landingPage = new LandingPage(this._driver);
+                LoginPage loginPage = new LoginPage(this._driver);
 
                 landingPage.NavigateToLandingPage();
 
@@ -106,8 +106,8 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         {
             try
             {
-                Commons commons = new Commons(_driver);
-                LoginPage loginPage = new LoginPage(_driver);
+                Commons commons = new Commons(this._driver);
+                LoginPage loginPage = new LoginPage(this._driver);
 
                 loginPage.NavigateToLoginPage();
 
@@ -137,8 +137,8 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         {
             try
             {
-                Commons commons = new Commons(_driver);
-                LoginPage loginPage = new LoginPage(_driver);
+                Commons commons = new Commons(this._driver);
+                LoginPage loginPage = new LoginPage(this._driver);
 
                 loginPage.NavigateToLoginPage();
 
@@ -167,8 +167,8 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         {
             try
             {
-                Commons commmonss = new Commons(_driver);
-                LoginPage loginPage = new LoginPage(_driver);
+                Commons commmonss = new Commons(this._driver);
+                LoginPage loginPage = new LoginPage(this._driver);
 
                 loginPage.NavigateToLoginPage();
 
@@ -195,7 +195,7 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         [TearDown]
         public void TearDown()
         {
-            _driver.Quit();
+            this._driver.Quit();
         }
 
     }
