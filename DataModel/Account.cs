@@ -8,5 +8,9 @@ namespace MyTestAutomationSeleniumCSharp.DataModel
     {
         public string ValidUsername { get; set; }
         public string ValidPassword { get; set; }
+
+        public string InvalidUsername { get; set; }
+
+        public string InvalidPassword { get; set; }
     }
 }
