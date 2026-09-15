@@ -1,5 +1,7 @@
 ﻿using MyTestAutomationSeleniumCSharp.Custom;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,14 +23,15 @@ namespace MyTestAutomationSeleniumCSharp.Pages
         IWebElement homeLink => this._driver.FindElement(By.PartialLinkText("Home"));
         
         IWebElement employeesLink => this._driver.FindElement(By.PartialLinkText("Employees"));
-        
+
         IWebElement dashboardLink => this._driver.FindElement(By.PartialLinkText("Dashboard"));
         
         IWebElement aboutLink => this._driver.FindElement(By.PartialLinkText("About"));
         
         IWebElement registerLink => this._driver.FindElement(By.LinkText("Register"));
         
-        IWebElement loginLink => this._driver.FindElement(By.LinkText("Login"));
+        IWebElement loginLink => this._driver.FindElement(By.CssSelector("ul > li > a[href='/Account/Login']"));
+
 
 
         //**Page Actions / Methods for Common Page**//
@@ -65,6 +68,13 @@ namespace MyTestAutomationSeleniumCSharp.Pages
         public void ClickRegisterLink()
         {
             Helper.ClickElement(registerLink);
+        }
+
+
+        //Method to click Login link
+        public void ClickLoginLink()
+        {
+            Helper.ClickElement(loginLink);
         }
 
     }
