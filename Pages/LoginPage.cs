@@ -1,6 +1,7 @@
 ﻿using MyTestAutomationSeleniumCSharp.Custom;
 using OpenQA.Selenium;
 using OpenQA.Selenium.DevTools.V151.Emulation;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +20,16 @@ namespace MyTestAutomationSeleniumCSharp.Pages
         }
 
 
+        //** Error Messages ** //
+
+        public static readonly string _errMsgNotDisplayed = "Alert Error Message is not displayed.";
+        public static readonly string _errMsgPageNotAccessible = "Accessing Login Page Not Successful";
+        public static readonly string _errMsgLoginNotSuccesful = "User is unable to login successfully";
+        public static readonly string _errMsgLoginSuccessfulInvalidUsername = "User is able to logged in using invalid username";
+        public static readonly string _errMsgLoginSuccessfulInvalidPassword = "User is able to logged in using invalid password";
+        public static readonly string _errMsgLoginSuccessfulInvalidCredentials = "User is able to logged in using invalid username and invalid password";
+
+
         //**Page Elements for Login Page**//
         IWebElement usernameTxt => this._driver.FindElement(By.Id("UserName"));
         
@@ -30,11 +41,19 @@ namespace MyTestAutomationSeleniumCSharp.Pages
 
         IWebElement rememberMeCheckbox => this._driver.FindElement(By.Id("RememberMe"));
 
+        IWebElement errorMsg => this._driver.FindElement(By.CssSelector(".alert-danger > ul > li"));
 
-        
-        
+        IWebElement employeeDetailsLink => this._driver.FindElement(By.CssSelector("ul > li > a[href='/EmployeeDetails']"));
+
+        IWebElement helloLink => this._driver.FindElement(By.PartialLinkText("Hello"));
+
+        IWebElement logoutBtn => this._driver.FindElement(By.CssSelector("ul > li > form > button"));
+
+
+
+
         //**Page Actions / Methods for Login Page**//
-        
+
         //Method to navigate to login page
         public void NavigateToLoginPage()
         {
@@ -85,6 +104,49 @@ namespace MyTestAutomationSeleniumCSharp.Pages
                 return false;
             }   
         }
+
+
+        public bool CheckErrorMsgIfVisible()
+        {
+            try
+            {
+                if (errorMsg.Displayed)
+                    return true;
+
+                return false;
+            }
+            catch (NoSuchElementException e)
+            {
+                return false;
+            }
+        }
+
+
+
+
+        //Method to chekc if user is logged in
+        public bool CheckUserIsLoggedIn()
+        {
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+                bool elementIsVisible = wait.Until(_driver =>
+                {
+                    var empDetails = employeeDetailsLink;
+                    var logout = logoutBtn;
+
+                    return (empDetails.Displayed && logout.Displayed) ? true : false;
+                });
+
+                return elementIsVisible;
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
 
     }
 }
