@@ -1,4 +1,6 @@
 {
   "ValidUsername": "Admin",
-  "ValidPassword": "password"
+  "ValidPassword": "password",
+  "InvalidUsername": "xcvasdd",
+  "InvalidPassword" :  "....asasda232321"
 }
