@@ -90,6 +90,8 @@ namespace MyTestAutomationSeleniumCSharp.Pages
             Helper.ClickElement(loginBtn);
         }
 
+
+        //Action to check if Login Page is accessible//
         public bool CheckLoginPageAccessible()
         {
             try
@@ -106,6 +108,7 @@ namespace MyTestAutomationSeleniumCSharp.Pages
         }
 
 
+        //Action to check if Error Alert Message is displayed when Login Page is unsuccessful//
         public bool CheckErrorMsgIfVisible()
         {
             try
@@ -124,7 +127,7 @@ namespace MyTestAutomationSeleniumCSharp.Pages
 
 
 
-        //Method to chekc if user is logged in
+        //Method to chekc if user is logged in to the system//
         public bool CheckUserIsLoggedIn()
         {
             try
