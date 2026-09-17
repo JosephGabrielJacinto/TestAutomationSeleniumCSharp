@@ -2,6 +2,7 @@
 using MyTestAutomationSeleniumCSharp.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -92,6 +93,57 @@ namespace MyTestAutomationSeleniumCSharp.Tests
                 else
                 {
                     Assert.Fail(LoginPage._errMsgPageNotAccessible);
+                }
+            }
+            catch (Exception e)
+            {
+                Assert.Fail($"Test Failed - {e.Message}");
+            }
+        }
+
+
+        [Test (Author = "Joseph Jacinto")]
+        [Description ("Verify that user can add new employee record")]
+        public void Test_Emp_03_VerifySuccessfulAdditionOfNewEmployee()
+        {
+            try
+            {
+                LoginPage loginPage = new LoginPage(this._driver);
+
+                loginPage.NavigateToLoginPage();
+
+                if (loginPage.CheckLoginPageAccessible())
+                {
+                    loginPage.Login(DataRead.GetUserAccount().ValidUsername, DataRead.GetUserAccount().ValidPassword);
+
+                    if (loginPage.CheckUserIsLoggedIn())
+                    {
+                        Commons commons = new Commons(this._driver);
+                        commons.ClickEmployeeLink();
+
+                        EmployeePage empPage = new EmployeePage(this._driver);
+                        if (empPage.CheckIfEmployeePageIsAccesible())
+                        {
+                            empPage.NavigateToCreateEmpPage();
+
+                            CreateEmployee createEmpPage = new CreateEmployee(this._driver);
+
+                            if (createEmpPage.VerifyAddNewEmpPageIsDisplayed())
+                            {
+                                createEmpPage.AddNewEmployee(DataRead.GetEmployee());
+                                
+                                IWebElement addedEmp = empPage.SearchEmployeeByName(DataRead.GetEmployee().Name);
+
+                                if (addedEmp != null)
+                                {
+                                    empPage.DeleteEmployee(addedEmp);
+                                }
+
+                                Assert.That((addedEmp != null), CreateEmployee._errMsgAddingNewEmpFailed);                                
+                            }
+
+                        }
+                    }
                 }
             }
             catch (Exception e)
