@@ -10,15 +10,23 @@ namespace MyTestAutomationSeleniumCSharp.Custom
 {
     public class DataRead
     {
+
+        private static string _path = @"C:\Users\joseph jacinto\source\repos\MyTestAutomationSeleniumCSharp\data\";
+
         public static Account GetUserAccount()
         {
-            string dataFromJson = File.ReadAllText(@"C:\Users\joseph jacinto\source\repos\MyTestAutomationSeleniumCSharp\data\Account.json");
+            string dataFromJson = File.ReadAllText($"{DataRead._path}Account.json");
 
-            var userAccount = JsonSerializer.Deserialize<Account>(dataFromJson);
-
-            return userAccount;
+            return JsonSerializer.Deserialize<Account>(dataFromJson);
         }
 
+
+        public static Employee GetEmployee()
+        {
+            string dataFromJson = File.ReadAllText($"{DataRead._path}Employee.json");
+
+            return JsonSerializer.Deserialize<Employee>(dataFromJson);
+        }
 
     }
 }
