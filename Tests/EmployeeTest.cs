@@ -126,7 +126,7 @@ namespace MyTestAutomationSeleniumCSharp.Tests
                         {
                             empPage.NavigateToCreateEmpPage();
 
-                            CreateEmployee createEmpPage = new CreateEmployee(this._driver);
+                            CreateEmployeePage createEmpPage = new CreateEmployeePage(this._driver);
 
                             if (createEmpPage.VerifyAddNewEmpPageIsDisplayed())
                             {
@@ -139,7 +139,7 @@ namespace MyTestAutomationSeleniumCSharp.Tests
                                     empPage.DeleteEmployee(addedEmp);
                                 }
 
-                                Assert.That((addedEmp != null), CreateEmployee._errMsgAddingNewEmpFailed);                                
+                                Assert.That((addedEmp != null), CreateEmployeePage._errMsgAddingNewEmpFailed);                                
                             }
 
                         }
