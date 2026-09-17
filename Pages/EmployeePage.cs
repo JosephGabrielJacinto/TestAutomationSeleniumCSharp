@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using MyTestAutomationSeleniumCSharp.Custom;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System.Xml.Linq;
@@ -31,7 +32,7 @@ namespace MyTestAutomationSeleniumCSharp.Pages
         IWebElement searchBtn => this._driver.FindElement(By.ClassName("btn-search"));
         IWebElement pageNavBtn => this._driver.FindElement(By.ClassName("page-btn"));
         IWebElement empCountBadge => this._driver.FindElement(By.CssSelector("span.stat-badge"));
-
+        IWebElement deleteBtn => this._driver.FindElement(By.CssSelector("table > tbody > tr > td > div > a.btn-del"));
 
         //**Methods for Emplyee Page**//
         public bool CheckIfEmployeePageIsAccesible()
@@ -73,7 +74,6 @@ namespace MyTestAutomationSeleniumCSharp.Pages
                         {
                             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
                             ((IJavaScriptExecutor)this._driver).ExecuteScript("arguments[0].scrollIntoView(true);", nextBtn);
-
                             ((IJavaScriptExecutor)this._driver).ExecuteScript("arguments[0].click();", nextBtn);
                         }
                     }
@@ -92,5 +92,56 @@ namespace MyTestAutomationSeleniumCSharp.Pages
             }
         }
 
+
+        public void NavigateToCreateEmpPage()
+        {
+            Helper.ClickElement(addNewEmpBtn);
+        }
+
+
+        public IWebElement SearchEmployeeByName(string empName)
+        {
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+                bool elementIsVisible = wait.Until(_driver =>
+                {
+                    var searchTxt = searchByNameTxt;
+                    return searchTxt.Displayed ? true : false;
+                });
+
+                if (elementIsVisible)
+                {
+                    Helper.EnterText(searchByNameTxt, empName);
+                    Helper.ClickElement(searchBtn);
+
+                    IWebElement searchResult = empTable.FindElement(By.CssSelector("span.emp-name"));
+                    return searchResult;
+                }
+                else { return null; }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            
+        }
+
+
+        public bool DeleteEmployee(IWebElement emp)
+        {
+            try
+            {
+                Helper.ClickElement(deleteBtn);
+                DeleteEmployeePage deleteEmpPage = new DeleteEmployeePage(_driver);
+                deleteEmpPage.ConfirmDeleteEmployee();
+
+                return true;                
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }
