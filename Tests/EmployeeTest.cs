@@ -9,20 +9,8 @@ using System.Text;
 
 namespace MyTestAutomationSeleniumCSharp.Tests
 {
-    public class EmployeeTest
+    public class EmployeeTest : UiBaseTest
     {
-
-        #pragma warning disable CA1859
-        #pragma warning disable NUnit1032
-        private IWebDriver _driver;
-
-        [SetUp]
-        public void Setup()
-        {
-            this._driver = new ChromeDriver();
-        }
-
-
 
         [Test(Author = "Joseph Jacinto")]
         [Description("Verifies that user can access employees page")]
@@ -30,9 +18,9 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         {
             try
             {
-                LoginPage loginPage = new LoginPage(_driver);
-                Commons commons = new Commons(_driver);
-                EmployeePage empPage = new EmployeePage(_driver);
+                LoginPage loginPage = new LoginPage(driver);
+                Commons commons = new Commons(driver);
+                EmployeePage empPage = new EmployeePage(driver);
 
                 loginPage.NavigateToLoginPage();
 
@@ -69,9 +57,9 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         {
             try
             {
-                LoginPage loginPage = new LoginPage(_driver);
-                Commons commons = new Commons(_driver);
-                EmployeePage empPage = new EmployeePage(_driver);
+                LoginPage loginPage = new LoginPage(driver);
+                Commons commons = new Commons(driver);
+                EmployeePage empPage = new EmployeePage(driver);
 
                 loginPage.NavigateToLoginPage();
 
@@ -108,7 +96,7 @@ namespace MyTestAutomationSeleniumCSharp.Tests
         {
             try
             {
-                LoginPage loginPage = new LoginPage(this._driver);
+                LoginPage loginPage = new LoginPage(driver);
 
                 loginPage.NavigateToLoginPage();
 
@@ -118,15 +106,15 @@ namespace MyTestAutomationSeleniumCSharp.Tests
 
                     if (loginPage.CheckUserIsLoggedIn())
                     {
-                        Commons commons = new Commons(this._driver);
+                        Commons commons = new Commons(driver);
                         commons.ClickEmployeeLink();
 
-                        EmployeePage empPage = new EmployeePage(this._driver);
+                        EmployeePage empPage = new EmployeePage(driver);
                         if (empPage.CheckIfEmployeePageIsAccesible())
                         {
                             empPage.NavigateToCreateEmpPage();
 
-                            CreateEmployeePage createEmpPage = new CreateEmployeePage(this._driver);
+                            CreateEmployeePage createEmpPage = new CreateEmployeePage(driver);
 
                             if (createEmpPage.VerifyAddNewEmpPageIsDisplayed())
                             {
@@ -151,16 +139,6 @@ namespace MyTestAutomationSeleniumCSharp.Tests
                 Assert.Fail($"Test Failed - {e.Message}");
             }
         }
-
-
-
-
-        [TearDown]
-        public void Teardown()
-        {
-            this._driver.Quit();
-        }
-
 
     }
 }
